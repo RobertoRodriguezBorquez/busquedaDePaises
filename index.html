@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -7,8 +7,103 @@
     <title>Buscador de paises.</title>
   </head>
   <body>
-    <div id="titulo">
-      Que pasa chavales!
+    <div class="container">
+      <div id="titulo">Que pasa chavales!</div>
+      <div class="busqueda">
+        <input type="text" placeholder="escriba país aquí." />
+      </div>
+      <section class="resultado">
+        <table border="1">
+          <caption>
+            Datos de Países
+          </caption>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Bandera</th>
+              <th>Nombre</th>
+              <th>Población</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>
+                <img
+                  src="ruta-a-la-bandera-chile.jpg"
+                  alt="Bandera de Chile"
+                  width="30"
+                />
+              </td>
+              <td>Santiago, Chile</td>
+              <td>7,000,000</td>
+             
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>
+                <img
+                  src="ruta-a-la-bandera-peru.jpg"
+                  alt="Bandera de Perú"
+                  width="30"
+                />
+              </td>
+              <td>Lima, Perú</td>
+              <td>9,500,000</td>
+              <!-- Población de ejemplo -->
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>
+                <img
+                  src="ruta-a-la-bandera-colombia.jpg"
+                  alt="Bandera de Colombia"
+                  width="30"
+                />
+              </td>
+              <td>Medellín, Colombia</td>
+              <td>2,500,000</td>
+              <!-- Población de ejemplo -->
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>
+                <img
+                  src="ruta-a-la-bandera-argentina.jpg"
+                  alt="Bandera de Argentina"
+                  width="30"
+                />
+              </td>
+              <td>Buenos Aires, Argentina</td>
+              <td>3,000,000</td>
+              <!-- Población de ejemplo -->
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <main>
+        <div class="info-pais">
+          <h1>País: Chile</h1>
+          <div class="bandera">
+            <img src="" alt="bandera de chile" />
+          </div>
+          <div class="informacion">
+            <h2>poblacón</h2>
+            <p>10000</p>
+            <h2>código númerico</h2>
+            <p>376</p>
+            <h2>código alpha</h2>
+            <p>CL</p>
+          </div>
+        </div>
+        <div class="traduccion">
+          <h1>traducción</h1>
+          <p>chile</p>
+          <p>chilito</p>
+          <p>pasillo </p>
+          <p>xile</p>
+        </div>
+      </main>
     </div>
     <script type="module" src="/src/main.js"></script>
   </body>
