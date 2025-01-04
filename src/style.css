@@ -125,10 +125,91 @@ main {
 }
 
 /* footer */
-footer {
-  width: 100vh;
-  background-color: gray;
-  color: white;
-  padding: 10px;
+/* Estilos generales del footer */
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 1rem 2rem;
+  background-color: #ffffff;
+  border-top: 1px solid #e5e7eb;
+  box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 20;
+  display: flex;
+  flex-direction: column; /* Inicialmente los elementos estarán en columna */
+  align-items: center;
+  justify-content: center; /* Centra todo el contenido */
   text-align: center;
 }
+
+/* Centrado de los textos en pantallas pequeñas */
+.footer .footer-text {
+  display: flex;
+  flex-direction: column; /* Coloca los textos en columna */
+  align-items: center;    /* Centra el texto horizontalmente */
+  justify-content: center; /* Centra el contenido verticalmente */
+  font-size: 12px;
+  color: #6b7280;
+  margin: 0;
+}
+
+.footer .footer-text a {
+  color: #6b7280;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  margin-top: 5px; /* Espacio entre los textos */
+}
+
+.footer .footer-text a:hover {
+  color: #1f2937;
+  text-decoration: underline;
+}
+
+/* Para pantallas medianas en adelante */
+@media (min-width: 768px) {
+  .footer {
+      flex-direction: row; /* Cambia la disposición a fila */
+      justify-content: space-between; /* Distribuye los elementos a los lados */
+      align-items: center;
+  }
+
+  .footer .footer-text {
+      display: block;
+  }
+
+  .footer .footer-text a:last-child {
+      margin-left: 20px; /* Separa el enlace "Inicio" */
+  }
+}
+
+
+.footer-text a:hover {
+  text-decoration: underline;
+  color: #1f2937;
+}
+
+/* Estilos para los iconos en el footer */
+.footer-nav {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+  padding: 0;
+  list-style: none;
+  justify-content: center;
+}
+
+.footer-nav-item {
+  font-size: 1.5rem; /* Aumenta el tamaño de los iconos */
+  color: #6b7280;
+  margin: 0 1rem;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-nav-item:hover {
+  color: #1f2937;
+}
+
+
+
