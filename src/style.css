@@ -46,6 +46,7 @@ header {
 /* tabla de datos de paises */
 .resultado {
   margin: 0 2rem;
+  
 }
 table caption {
   background-color: bisque;
@@ -54,6 +55,7 @@ table caption {
   border-radius: 10px;
   padding: 5px;
 }
+
 /* info pais */
 main {
   width: 100%;
@@ -74,7 +76,8 @@ main {
   
 
   .info-pais-titulo {
-    font-size: x-large;
+   
+    font-size:smaller;
     text-align: center;
     background-color: mediumseagreen;
     color: aliceblue;
@@ -98,7 +101,7 @@ main {
   }
   .traduccion {
     grid-area: traduccion;
-
+    
     background-color: grey;
     text-align: center;
 
@@ -111,15 +114,18 @@ main {
     p {
       display: inline-flex;
       background-color: aliceblue;
-      padding: 2px;
+      padding: px;
       border-radius: 5px;
       margin-right: 2px;
+      margin-top: 2px;
+      
     }
   }
   .info-pais, 
   .informacion,
   .traduccion{border-radius: 5px;
     padding: 10px;
+    
 
   }
 }
@@ -127,7 +133,7 @@ main {
 /* footer */
 /* Estilos generales del footer */
 .footer {
-  position: fixed;
+  
   bottom: 0;
   left: 0;
   width: 100%;
@@ -165,25 +171,6 @@ main {
   color: #1f2937;
   text-decoration: underline;
 }
-
-/* Para pantallas medianas en adelante */
-@media (min-width: 768px) {
-  .footer {
-      flex-direction: row; /* Cambia la disposición a fila */
-      justify-content: space-between; /* Distribuye los elementos a los lados */
-      align-items: center;
-  }
-
-  .footer .footer-text {
-      display: block;
-  }
-
-  .footer .footer-text a:last-child {
-      margin-left: 20px; /* Separa el enlace "Inicio" */
-  }
-}
-
-
 .footer-text a:hover {
   text-decoration: underline;
   color: #1f2937;
@@ -210,6 +197,26 @@ main {
 .footer-nav-item:hover {
   color: #1f2937;
 }
+
+/* Para pantallas medianas en adelante */
+@media (min-width: 768px) {
+  .footer {
+      flex-direction: row; /* Cambia la disposición a fila */
+      justify-content: space-between; /* Distribuye los elementos a los lados */
+      align-items: center;
+  }
+
+  .footer .footer-text {
+      display: block;
+  }
+
+  .footer .footer-text a:last-child {
+      margin-left: 20px; /* Separa el enlace "Inicio" */
+  }
+}
+
+
+
 
 
 
