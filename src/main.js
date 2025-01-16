@@ -6,36 +6,34 @@ titulo.innerHTML = "Busqueda de paises.";
 const tableListado = document.getElementById("table-listado");
 tableListado.innerHTML = "";
 
-const seccionTarjeta=document.querySelector("main")
-seccionTarjeta.innerHTML="";
-
-
-
+const seccionTarjeta = document.querySelector("main");
+seccionTarjeta.innerHTML = "";
 
 //guardar boton de busqueda y busqueda
-const imputPaís=document.getElementById("buscador")
+const imputPaís = document.getElementById("buscador");
 const btnBuscar = document.getElementById("bntBuscar");
-const salidaTexto=document.getElementById("resultado")
+const salidaTexto = document.getElementById("resultado");
 
 // bandera país cuando no carga la img.
- const alt="bandera de: "
+const alt = "bandera de: ";
+//variable id en la tabla de paises buscados
+let id=0;
 
 
- //función para guardar el texto del imput buscador.
- btnBuscar.addEventListener("click",(name)=>{
-  getApiBusqueda()
-    name=imputPaís.value.toLowerCase()
-   console.log(name);
-   salidaTexto.innerHTML=`resultado: ${name}`; 
 
-   
-   
- })
- 
+//funcion debounce para controlar el tiempo de la busqueda en el input
+function debounce(func, delay) {
+  let timer;
+  return function(...args) {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      func.apply(this, args);
+    }, delay);
+  };
+}
 
 //funcion estilos para resultado de busqueda
-const disenoBusqueda = (id, name, bandera, poblacion,capital) => {
-   
+const disenoBusqueda = (id, name, bandera, poblacion, capital) => {
   return `
   
       <tbody>
@@ -62,8 +60,19 @@ const disenoBusqueda = (id, name, bandera, poblacion,capital) => {
 };
 
 //funcion diseño de tarjeta alo presionar ver más.
-const disenoTarjeta=(name,bandera,poblacion,abreviacion,languages,traduccion1,traduccion3,traduccion2,traduccion4,traduccion5)=>{
-    return `
+const disenoTarjeta = (
+  name,
+  bandera,
+  poblacion,
+  abreviacion,
+  languages,
+  traduccion1,
+  traduccion3,
+  traduccion2,
+  traduccion4,
+  traduccion5
+) => {
+  return `
      <div class="info-pais">
           <h1 class="info-pais-titulo">País:${name}</h1>
           <h2>Bandera</h2>
@@ -93,51 +102,62 @@ const disenoTarjeta=(name,bandera,poblacion,abreviacion,languages,traduccion1,tr
           
         </div>
   `;
-
-}
+};
 
 //función para acceder a la api
 
-const getApiBusqueda = async () => {
-  const urlpi = "https://restcountries.com/v3.1/region/South America"; // acceder por region
+const getApiBusqueda = async (paisBusqueda,) => {
+  const urlpi = `https://restcountries.com/v3.1/translation/${paisBusqueda}`;
+  
 
   try {
     const acceso = await fetch(urlpi);
     if (acceso.status == 200) {
       const respuesta = await acceso.json(); // se convierte en json la respuesta de la url
-      
-      const id = 0;
-      
-      respuesta.forEach((pais, id) => {
-        //de la respuesta que esta ya por la region south america, saco y guardo en variable los datos que quiero.
-        /*  console.log(pais.name.common); */
 
-        
-       
-        const name = pais.name.common;
-        const bandera = pais.flags.png;
-        const poblacion = pais.population.toLocaleString('es-ES');
-        const abreviacion = pais.cca2;
-        
-        const languages = pais.languages.spa;
-        const capital = pais.capital[0];
-        //sacar traducciones
-        const traduccion1=pais.translations.spa.common;
-        const traduccion2=pais.translations.fra.common;
-        const traduccion3=pais.translations.jpn.common;
-        const traduccion4=pais.translations.per.common;
-        const traduccion5=pais.translations.bre.common;
-        
-        
-        
-        
-        id++;
+       // Incrementamos el id antes de usarlo
+       id++;
 
-        /* pasamos los argumentos a la funcion del diseno table para que cree la tabla con cada parametro que se le pase a la funcion de disenoBusqueda*/
-        tableListado.innerHTML += disenoBusqueda(id, name, bandera,poblacion,capital);
-        seccionTarjeta.innerHTML += disenoTarjeta(name,bandera,poblacion,abreviacion,languages,traduccion1,traduccion3,traduccion2,traduccion4,traduccion5)
-        
-      });
+      // Extraer los datos necesario
+      const name = respuesta[0].name.common;
+      const bandera = respuesta[0].flags.png;
+      const poblacion = respuesta[0].population.toLocaleString("es-ES");
+      const abreviacion = respuesta[0].cca2;
+      const languages = Object.values(respuesta[0].languages).join(", ");
+      const capital = respuesta[0].capital[0];
+
+      // Traducciones
+      const traduccion1 =
+        respuesta[0].translations.spa.common || "Sin traducción";
+      const traduccion2 =
+        respuesta[0].translations.fra.common || "Sin traducción";
+      const traduccion3 =
+        respuesta[0].translations.jpn.common || "Sin traducción";
+      const traduccion4 =
+        respuesta[0].translations.per.common || "Sin traducción";
+      const traduccion5 =
+        respuesta[0].translations.bre.common || "Sin traducción";
+
+      /* pasamos los argumentos a la funcion del diseno table para que cree la tabla con cada parametro que se le pase a la funcion de disenoBusqueda*/
+      tableListado.innerHTML += disenoBusqueda(
+        id,
+        name,
+        bandera,
+        poblacion,
+        capital
+      );
+      seccionTarjeta.innerHTML += disenoTarjeta(
+        name,
+        bandera,
+        poblacion,
+        abreviacion,
+        languages,
+        traduccion1,
+        traduccion3,
+        traduccion2,
+        traduccion4,
+        traduccion5
+      );
       
     } else if (acceso.status === 404) {
       console.log("No se encontró la API");
@@ -151,6 +171,32 @@ const getApiBusqueda = async () => {
   }
 };
 
-getApiBusqueda();
 
+// función para manejar el input con debounce
+const handleInput = (event) => {
+  clearTable()
+  const paisImput = event.target.value.toLowerCase().trim();
+  if (paisImput) {
+    salidaTexto.innerHTML = `Resultado: ${paisImput}`;
+    getApiBusqueda(paisImput); // Llama a la función de búsqueda
+  } else {
+    salidaTexto.innerHTML = "Por favor, ingresa un país.";
+    tableListado.innerHTML = ""; // Limpia la tabla si no hay texto
+  }
 
+};
+
+//Función para limpiar table
+const clearTable=()=>{
+  tableListado.innerHTML = "";
+  seccionTarjeta.innerHTML = "";
+}
+
+// Envolver la función con debounce
+const handleDebouncedInput = debounce(handleInput, 500); 
+
+// Asignar el evento al input
+imputPaís.addEventListener("input", handleDebouncedInput);
+
+// Carga inicial
+document.addEventListener("DOMContentLoaded", getApiBusqueda);
