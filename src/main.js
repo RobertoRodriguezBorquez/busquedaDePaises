@@ -9,22 +9,20 @@ tableListado.innerHTML = "";
 const seccionTarjeta = document.querySelector("main");
 seccionTarjeta.innerHTML = "";
 
-//guardar boton de busqueda y busqueda
+//guardar  busqueda
 const imputPaís = document.getElementById("buscador");
-const btnBuscar = document.getElementById("bntBuscar");
-const salidaTexto = document.getElementById("resultado");
 
 // bandera país cuando no carga la img.
 const alt = "bandera de: ";
 //variable id en la tabla de paises buscados
-let id=0;
-
-
+let id = 0;
+//arreglo para almacenar los datos para hacer click y ver las tarjetas con los datos respectivos.
+const paisesData = [];
 
 //funcion debounce para controlar el tiempo de la busqueda en el input
 function debounce(func, delay) {
   let timer;
-  return function(...args) {
+  return function (...args) {
     clearTimeout(timer);
     timer = setTimeout(() => {
       func.apply(this, args);
@@ -33,25 +31,30 @@ function debounce(func, delay) {
 }
 
 //funcion estilos para resultado de busqueda
-const disenoBusqueda = (id, name, bandera, poblacion, capital) => {
+const disenoBusqueda = (id, name, bandera, poblacion, capital, region) => {
   return `
   
       <tbody>
         <tr>
-          <td>${id}</td>
+           <td><button class="btn-ver-detalle" data-id="${id}">Ver Detalle</button>
+</td>
           <td>
             <img
             
               src="${bandera}"
               alt="${alt}${name}"
               
-              width="20"
+              width="30"
+             
             />
           </td>
           <td>${name}</td>
           <td>${poblacion}</td>
           <td>${capital}</td>
-          <td>Ver...</td>
+          <td>${region}</td
+         
+          
+          
         </tr>
       
         
@@ -63,6 +66,7 @@ const disenoBusqueda = (id, name, bandera, poblacion, capital) => {
 const disenoTarjeta = (
   name,
   bandera,
+  subregion,
   poblacion,
   abreviacion,
   languages,
@@ -85,8 +89,11 @@ const disenoTarjeta = (
           </div>
         </div>
         <div class="informacion">
-          <h2>poblacón</h2>
+        <h2>Sub región</h2>
+          <p>${subregion}</p>  
+        <h2>poblacón</h2>
           <p>${poblacion}</p>
+          
           <h2>idioma</h2>
           <p>${languages}</p>
           <h2>código alpha</h2>
@@ -106,97 +113,115 @@ const disenoTarjeta = (
 
 //función para acceder a la api
 
-const getApiBusqueda = async (paisBusqueda,) => {
-  const urlpi = `https://restcountries.com/v3.1/translation/${paisBusqueda}`;
-  
+const getApiBusqueda = async (paisBusqueda) => {
+  const urlpi = `https://restcountries.com/v3.1/name/${paisBusqueda}`;
 
   try {
     const acceso = await fetch(urlpi);
-    if (acceso.status == 200) {
-      const respuesta = await acceso.json(); // se convierte en json la respuesta de la url
+    if (acceso.status === 200) {
+      const respuesta = await acceso.json(); // Respuesta en formato JSON
 
-       // Incrementamos el id antes de usarlo
-       id++;
+      // Limpia la tabla y sección antes de agregar resultados
+      tableListado.innerHTML = "";
+      seccionTarjeta.innerHTML = "";
+      const dataPais = [];
 
-      // Extraer los datos necesario
-      const name = respuesta[0].name.common;
-      const bandera = respuesta[0].flags.png;
-      const poblacion = respuesta[0].population.toLocaleString("es-ES");
-      const abreviacion = respuesta[0].cca2;
-      const languages = Object.values(respuesta[0].languages).join(", ");
-      const capital = respuesta[0].capital[0];
+      // Iterar sobre todos los países relacionados
+      respuesta.forEach((pais) => {
+        id++; // Incrementar ID para cada país
 
-      // Traducciones
-      const traduccion1 =
-        respuesta[0].translations.spa.common || "Sin traducción";
-      const traduccion2 =
-        respuesta[0].translations.fra.common || "Sin traducción";
-      const traduccion3 =
-        respuesta[0].translations.jpn.common || "Sin traducción";
-      const traduccion4 =
-        respuesta[0].translations.per.common || "Sin traducción";
-      const traduccion5 =
-        respuesta[0].translations.bre.common || "Sin traducción";
+        const name = pais.name.common;
+        const bandera = pais.flags.png;
+        const poblacion = pais.population.toLocaleString("es-ES");
+        const abreviacion = pais.cca2;
+        const languages = Object.values(pais.languages || {}).join(", ");
+        const capital = pais.capital ? pais.capital[0] : "Sin capital";
+        const region = pais.region;
+        const subregion = pais.subregion || "Sin subregión";
 
-      /* pasamos los argumentos a la funcion del diseno table para que cree la tabla con cada parametro que se le pase a la funcion de disenoBusqueda*/
-      tableListado.innerHTML += disenoBusqueda(
-        id,
-        name,
-        bandera,
-        poblacion,
-        capital
-      );
-      seccionTarjeta.innerHTML += disenoTarjeta(
-        name,
-        bandera,
-        poblacion,
-        abreviacion,
-        languages,
-        traduccion1,
-        traduccion3,
-        traduccion2,
-        traduccion4,
-        traduccion5
-      );
-      
+        // Traducciones
+        const traducciones = [
+          pais.translations?.spa?.common || "Sin traducción",
+          pais.translations?.fra?.common || "Sin traducción",
+          pais.translations?.jpn?.common || "Sin traducción",
+          pais.translations?.per?.common || "Sin traducción",
+          pais.translations?.bre?.common || "Sin traducción",
+        ];
+
+        // Actualizar tabla y tarjetas
+        tableListado.innerHTML += disenoBusqueda(
+          id,
+          name,
+          bandera,
+          poblacion,
+          capital,
+          region
+        );
+
+        paisesData.push({
+          id,
+          name,
+          bandera,
+          subregion,
+          poblacion,
+          abreviacion,
+          languages,
+          traducciones,
+        });
+      });
     } else if (acceso.status === 404) {
-      console.log("No se encontró la API");
-    } else if (acceso.status === 401) {
-      console.log("No tienes permisos");
+      console.log("No se encontraron resultados para la búsqueda.");
     } else {
-      console.log("Error desconocido");
+      console.log("Error al acceder a la API.");
     }
   } catch (error) {
     console.error("Error al acceder a la API:", error);
   }
 };
 
-
 // función para manejar el input con debounce
 const handleInput = (event) => {
-  clearTable()
+  clearTable();
   const paisImput = event.target.value.toLowerCase().trim();
   if (paisImput) {
-    salidaTexto.innerHTML = `Resultado: ${paisImput}`;
     getApiBusqueda(paisImput); // Llama a la función de búsqueda
   } else {
     salidaTexto.innerHTML = "Por favor, ingresa un país.";
-    tableListado.innerHTML = ""; // Limpia la tabla si no hay texto
+    clearTable();
   }
-
 };
 
 //Función para limpiar table
-const clearTable=()=>{
+const clearTable = () => {
   tableListado.innerHTML = "";
   seccionTarjeta.innerHTML = "";
-}
+};
+
+// Evento para ver detalles del país seleccionado
+tableListado.addEventListener("click", (event) => {
+  if (event.target.classList.contains("btn-ver-detalle")) {
+    const id = event.target.getAttribute("data-id"); // Obtén el id del botón
+    const paisSeleccionado = paisesData.find((pais) => pais.id == id); // Encuentra el país
+
+    if (paisSeleccionado) {
+      seccionTarjeta.innerHTML = disenoTarjeta(
+        paisSeleccionado.name,
+        paisSeleccionado.bandera,
+        paisSeleccionado.subregion,
+        paisSeleccionado.poblacion,
+        paisSeleccionado.abreviacion,
+        paisSeleccionado.languages,
+        ...paisSeleccionado.traducciones
+      );
+    }
+  }
+});
 
 // Envolver la función con debounce
-const handleDebouncedInput = debounce(handleInput, 500); 
+const handleDebouncedInput = debounce(handleInput, 200);
 
 // Asignar el evento al input
 imputPaís.addEventListener("input", handleDebouncedInput);
 
 // Carga inicial
-document.addEventListener("DOMContentLoaded", getApiBusqueda);
+document.addEventListener("DOMContentLoaded", getApiBusqueda(""));
