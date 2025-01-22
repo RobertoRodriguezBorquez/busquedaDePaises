@@ -44,17 +44,49 @@ header {
   }
 }
 
-/* tabla de datos de paises */
-.resultado {
-
-  
-}
 table caption {
-  background-color: bisque;
+  background-color: rgb(227, 220, 212);
   font-size: 2rem;
   margin-bottom: 10px;
   border-radius: 10px;
   padding: 5px;
+}
+
+/* Resultado tabla */
+.resultado {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  
+}
+
+.resultado table {
+  width: 90%;
+  border-collapse: collapse; /* Une los bordes de las celdas */
+  padding: 10px 0;
+  text-align: center;
+  box-sizing: border-box; /* Ajusta el ancho de las celdas al tamaño del contenido */
+}
+tbody {
+  font-size: 10px;
+  background-color: lightgray;
+}
+/* Estilo base para el botón */
+.resultado button {
+  font-size: 8px;
+  padding: 5px;
+
+  border: 1px solid #4caf50; /* Borde de color verde */
+
+  background-color: #4caf50; /* Color de fondo */
+  color: white; /* Color del texto */
+  cursor: pointer;
+}
+
+.resultado button:hover {
+  background-color: white;
+  color: #45a049;
 }
 
 /* info pais */
@@ -71,14 +103,10 @@ main {
   .info-pais {
     background-color: darkslategrey;
     grid-area: info-bandera;
-    
-   
   }
-  
 
   .info-pais-titulo {
-   
-    font-size:smaller;
+    font-size: smaller;
     text-align: center;
     background-color: mediumseagreen;
     color: aliceblue;
@@ -86,13 +114,12 @@ main {
   .info-pais h2 {
     color: darkgray;
     font-weight: lighter;
-    
   }
-  
+
   .bandera img {
     width: 100%;
     height: auto;
-   
+
     border-radius: 5px;
   }
   .informacion {
@@ -102,10 +129,9 @@ main {
   }
   .traduccion {
     grid-area: traduccion;
-    
+
     background-color: grey;
     text-align: center;
-
 
     h1 {
       flex-direction: column;
@@ -119,22 +145,19 @@ main {
       border-radius: 5px;
       margin-right: 2px;
       margin-top: 2px;
-      
     }
   }
-  .info-pais, 
+  .info-pais,
   .informacion,
-  .traduccion{border-radius: 5px;
+  .traduccion {
+    border-radius: 5px;
     padding: 10px;
-    
-
   }
 }
 
 /* footer */
 /* Estilos generales del footer */
 .footer {
-  
   bottom: 0;
   left: 0;
   width: 100%;
@@ -154,7 +177,7 @@ main {
 .footer .footer-text {
   display: flex;
   flex-direction: column; /* Coloca los textos en columna */
-  align-items: center;    /* Centra el texto horizontalmente */
+  align-items: center; /* Centra el texto horizontalmente */
   justify-content: center; /* Centra el contenido verticalmente */
   font-size: 12px;
   color: #6b7280;
@@ -202,22 +225,16 @@ main {
 /* Para pantallas medianas en adelante */
 @media (min-width: 768px) {
   .footer {
-      flex-direction: row; /* Cambia la disposición a fila */
-      justify-content: space-between; /* Distribuye los elementos a los lados */
-      align-items: center;
+    flex-direction: row; /* Cambia la disposición a fila */
+    justify-content: space-between; /* Distribuye los elementos a los lados */
+    align-items: center;
   }
 
   .footer .footer-text {
-      display: block;
+    display: block;
   }
 
   .footer .footer-text a:last-child {
-      margin-left: 20px; /* Separa el enlace "Inicio" */
+    margin-left: 20px; /* Separa el enlace "Inicio" */
   }
 }
-
-
-
-
-
-
