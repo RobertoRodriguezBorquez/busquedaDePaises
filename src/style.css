@@ -12,82 +12,153 @@
   justify-content: space-around;
   height: 100dvh;
 }
-/* header titulo */
+/* Header  */
 header {
   display: flex;
-  width: 100vh;
-  background-color: gray;
-
-  padding: 20px;
   align-items: center;
-  justify-content: center;
-
-  h1 {
-    color: white;
-    width: auto;
-  }
+  padding: 15px 30px;
+  background: linear-gradient(to right, #4b854d, #81c784);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  color: white;
+  border-radius: 0px 0px 5px 5px;
 }
 
-/* busqueda */
+/* Título del header */
+header h1 {
+  font-size: 1.8rem;
+  font-weight: bold; 
+  margin: 0;
+  color: #ffff;
+}
+
+
+/* Contenedor de la búsqueda */
 .busqueda {
   display: flex;
+  justify-content: center;
+  align-items: center; 
   margin: 50px 0;
-  width: auto;
-  height: 50px;
-
-  input {
-    padding: 10px;
-    border-radius: 5px;
-    width: 100%;
-    border: solid 1px forestgreen;
-    box-sizing: border-box;
-  }
+  gap: 10px; 
+  width: 100%; 
 }
 
+/* Input mejorado */
+.busqueda input {
+  padding: 12px 16px; 
+  border-radius: 8px; 
+  width: 70%; 
+  max-width: 500px;
+  border: 1px solid #4caf50;
+  outline: none; 
+  font-size: 1rem;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+
+/* Efecto de enfoque (focus) */
+.busqueda input:focus {
+  border-color: #45a049; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+}
+
+/* Placeholder estilizado */
+.busqueda input::placeholder {
+  color: #9e9e9e; 
+  font-style: italic; 
+}
+
+
+/* Título de la tabla */
 table caption {
-  background-color: rgb(227, 220, 212);
+  background: linear-gradient(to right, #4b854d, #81c784);
   font-size: 2rem;
   margin-bottom: 10px;
   border-radius: 10px;
-  padding: 5px;
+  padding: 10px;
+  color: white; 
+  font-weight: bold; 
+  text-align: center; 
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); 
 }
 
-/* Resultado tabla */
+
+/* Contenedor de la tabla */
 .resultado {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  
+  width: 85%;
+  background-color: #f7f7f7;
+  overflow-x: auto; 
+  padding: 10px;
 }
 
+/* Tabla */
 .resultado table {
-  width: 90%;
-  border-collapse: collapse; /* Une los bordes de las celdas */
-  padding: 10px 0;
+  width: 100%; 
+  table-layout: fixed; 
+  border-collapse: collapse;
   text-align: center;
-  box-sizing: border-box; /* Ajusta el ancho de las celdas al tamaño del contenido */
+  background-color: #ffffff;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
 }
-tbody {
-  font-size: 10px;
-  background-color: lightgray;
+
+
+/* Celdas */
+.resultado table td,
+.resultado table th {
+  padding: 5px; 
+  border: 1px solid #dddddd;
+  box-sizing: border-box;
+  font-size: 0.9rem;
+  word-wrap: break-word; 
+  white-space: normal;
 }
-/* Estilo base para el botón */
+
+/* Cabecera de la tabla */
+.resultado table thead {
+  background-color: #e0e0e0;
+  color: #333333;
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+/* Filas del cuerpo */
+.resultado table tbody tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+.resultado table tbody tr:nth-child(even) {
+  background-color: #f0f0f0;
+}
+
+.resultado table tbody tr:hover {
+  background-color: #e8f5e9;
+}
+
+
+
+
+/* Botón */
 .resultado button {
-  font-size: 8px;
-  padding: 5px;
-
-  border: 1px solid #4caf50; /* Borde de color verde */
-
-  background-color: #4caf50; /* Color de fondo */
-  color: white; /* Color del texto */
+  font-size: 0.6rem;
+  padding: 6px 8px;
+  border: none; 
+  border-radius: 5px; 
+  background-color: #4caf50; 
+  color: #ffffff; 
   cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .resultado button:hover {
-  background-color: white;
-  color: #45a049;
+  background-color: #388e3c; /* Verde más oscuro al pasar el cursor */
+  transform: scale(1.05); /* Pequeño aumento al pasar el cursor */
 }
+
+
 
 /* info pais */
 main {
@@ -220,6 +291,21 @@ main {
 
 .footer-nav-item:hover {
   color: #1f2937;
+}
+
+
+/* RESPONSIVE */
+
+/* Adaptación en pantallas pequeñas */
+@media (max-width: 768px) {
+  .resultado table td {
+    padding: 3px; 
+    font-size: 0.5rem; 
+  }
+  .resultado table th {
+    padding: 2px; 
+    font-size: 0.5rem; 
+  }
 }
 
 /* Para pantallas medianas en adelante */
