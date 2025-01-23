@@ -1,6 +1,6 @@
 //guardar título y actualizarlo.
 const titulo = document.querySelector("header h1");
-titulo.innerHTML = "Busqueda de paises.";
+titulo.innerHTML = "Buscador de Países";
 
 //guardar tabla para almacenar los datos de países.
 const tableListado = document.getElementById("table-listado");
